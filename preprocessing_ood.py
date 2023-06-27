@@ -7,9 +7,6 @@ from tqdm import tqdm
 # specify the data directory ids that you want to use
 ids = {'04', '05', '06'}
 
-# Initialize a flag to check if it's the first directory
-first_directory = True
-
 # Iterate over the directory IDs
 for directory_id in ids:
     # Construct the image and mask directories based on the directory ID
@@ -69,14 +66,9 @@ for directory_id in ids:
     csv_file_path = 'data/ESD_ood.csv'
     print("Appending dataset to CSV:", csv_file_path)
 
-    # Check if it's the first directory, if yes, write the headers along with the data
-    if first_directory:
-        with open(csv_file_path, 'wb') as file:
-            np.savetxt(file, combined_array, delimiter=',', fmt='%d', header=",".join(headers), comments='')
-        first_directory = False
-    else:
-        # Append the data to the existing CSV file
-        with open(csv_file_path, 'ab') as file:
-            np.savetxt(file, combined_array, delimiter=',', fmt='%d')
+    # Save the combined array as a CSV file
+    csv_file_path = f'csv_files/dataset_{directory_id}.csv'
+    print("Saving dataset as CSV:", csv_file_path)
+    np.savetxt(csv_file_path, combined_array, delimiter=',', fmt='%d', header=",".join(headers), comments='')
 
-    print("Data appended to CSV.")
+    print("Dataset saved as CSV.")
