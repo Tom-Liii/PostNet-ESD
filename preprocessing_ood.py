@@ -4,14 +4,22 @@ import glob
 from PIL import Image
 from tqdm import tqdm
 
-def preprocessing_ood(id):
-    # Specify the path to your dataset images and masks
-    image_dir = f"/research/d5/gds/hzyang22/data/ESD_seg/{id}/image"
-    mask_dir = f"/research/d5/gds/hzyang22/data/ESD_seg/{id}/mask"
+# Define the range of directory IDs
+start_id = 4
+end_id = 6  # Update the end ID based on your requirement
 
-    # Create a directory to store the CSV file
-    if not os.path.exists('data'):
-        os.makedirs('data')
+# Create a directory to store the CSV files
+if not os.path.exists('data'):
+    os.makedirs('data')
+
+# Iterate over the directory IDs
+for directory_id in range(start_id, end_id + 1):
+    # Convert the directory ID to a zero-padded string
+    directory_id_str = str(directory_id).zfill(2)
+
+    # Construct the image and mask directories based on the directory ID
+    image_dir = f"/research/d5/gds/hzyang22/data/ESD_seg/{directory_id_str}/image"
+    mask_dir = f"/research/d5/gds/hzyang22/data/ESD_seg/{directory_id_str}/mask"
 
     # Print the data locations
     print("Image Directory:", image_dir)
@@ -20,7 +28,7 @@ def preprocessing_ood(id):
     # Load the dataset images
     print("Loading images...")
     images = []
-    image_files = glob.glob(os.path.join(image_dir, "*.png")) 
+    image_files = glob.glob(os.path.join(image_dir, "*.png"))  # Assuming images are in PNG format
     for image_file in tqdm(image_files):
         image = np.array(Image.open(image_file))
         images.append(image)
@@ -28,7 +36,7 @@ def preprocessing_ood(id):
     # Load the dataset masks
     print("Loading masks...")
     masks = []
-    mask_files = glob.glob(os.path.join(mask_dir, "*.png")) 
+    mask_files = glob.glob(os.path.join(mask_dir, "*.png"))  # Assuming masks are in PNG format
     for mask_file in tqdm(mask_files):
         mask = np.array(Image.open(mask_file))
         masks.append(mask)
@@ -53,24 +61,16 @@ def preprocessing_ood(id):
 
     # Create column headers as consecutive numbers
     num_features = images_flat.shape[1] + masks_flat.shape[1]
-    headers = [""] + [str(i) for i in range(num_features)]
+    headers = ["index"] + [str(i) for i in range(num_features)]
 
     # Concatenate the indices, images, and masks along the column axis
     combined_array = np.concatenate((indices, images_flat, masks_flat), axis=1)
 
-    # Save the combined array as CSV file
-    csv_file_path = f'data/ESD_{id}_ood.csv'
+    # Save the combined array as a CSV file
+    csv_file_path = f'data/dataset_{directory_id_str}.csv'
     print("Saving dataset as CSV:", csv_file_path)
-
-    # Create a progress bar for saving
-    with tqdm(total=1, desc="Saving CSV", unit="file") as pbar:
-        np.savetxt(csv_file_path, combined_array, delimiter=',', fmt='%d', header=",".join(headers), comments='')
-        pbar.update(1)
+    np.savetxt(csv_file_path, combined_array, delimiter=',', fmt='%d', header=",".join(headers), comments='')
 
     print("Dataset saved as CSV.")
 
-if __name__ == "__main__":
-    ids = {"02"}
-    # call preprocessing_ood for each id
-    for id in ids:
-        preprocessing_ood(id)
+print("All data saved in CSV.")
