@@ -4,18 +4,10 @@ import glob
 from PIL import Image
 from tqdm import tqdm
 
-# specify the data directory ids that you want to use
-ids = {'04', '05', '06'}
-
-# Iterate over the directory IDs
-for directory_id in ids:
-    # Construct the image and mask directories based on the directory ID
-    image_dir = f"/research/d5/gds/hzyang22/data/ESD_seg/{directory_id}/image"
-    mask_dir = f"/research/d5/gds/hzyang22/data/ESD_seg/{directory_id}/mask"
-
-    # Print the data locations
-    print("Image Directory:", image_dir)
-    print("Mask Directory:", mask_dir)
+def preprocessing_ood(id):
+    # Specify the path to your dataset images and masks
+    image_dir = f"/research/d5/gds/hzyang22/data/ESD_seg/{id}/image"
+    mask_dir = f"/research/d5/gds/hzyang22/data/ESD_seg/{id}/mask"
 
     # Create a directory to store the CSV file
     if not os.path.exists('data'):
@@ -62,9 +54,15 @@ for directory_id in ids:
     # Concatenate the indices, images, and masks along the column axis
     combined_array = np.concatenate((indices, images_flat, masks_flat), axis=1)
 
-    # Save the combined array as a CSV file
-    csv_file_path = f'data/dataset_{directory_id}.csv'
+    # Save the combined array as CSV file
+    csv_file_path = f'data/ESD_{id}.csv'
     print("Saving dataset as CSV:", csv_file_path)
-    np.savetxt(csv_file_path, combined_array, delimiter=',', fmt='%d', header=",".join(headers), comments='')
+
+    # Create a progress bar for saving
+    with tqdm(total=1, desc="Saving CSV", unit="file") as pbar:
+        np.savetxt(csv_file_path, combined_array, delimiter=',', fmt='%d', header=",".join(headers), comments='')
+        pbar.update(1)
 
     print("Dataset saved as CSV.")
+
+preprocessing_ood('01')
