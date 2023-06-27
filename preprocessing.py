@@ -39,13 +39,12 @@ masks_flat = masks_array.reshape(num_samples, -1)
 # Create an array for the indices
 indices = np.arange(num_samples).reshape(num_samples, 1)
 
-# Create column headers
-image_columns = [f"feature_element{i}" for i in range(images_flat.shape[1])]
-mask_columns = [f"mask_element{i}" for i in range(masks_flat.shape[1])]
-headers = [""] + image_columns + mask_columns
+# Create column headers as consecutive numbers
+num_features = images_flat.shape[1] + masks_flat.shape[1]
+headers = [""] + [str(i) for i in range(num_features)]
 
 # Concatenate the indices, images, and masks along the column axis
 combined_array = np.concatenate((indices, images_flat, masks_flat), axis=1)
 
 # Save the combined array as CSV file
-np.savetxt('csv_files/dataset.csv', combined_array, delimiter=',', fmt='%d', header=",".join(headers), comments='')
+np.savetxt('data/ESD.csv', combined_array, delimiter=',', fmt='%d', header=",".join(headers), comments='')
