@@ -62,12 +62,8 @@ for directory_id in ids:
     # Concatenate the indices, images, and masks along the column axis
     combined_array = np.concatenate((indices, images_flat, masks_flat), axis=1)
 
-    # Save the combined array as CSV file
-    csv_file_path = 'data/ESD_ood.csv'
-    print("Appending dataset to CSV:", csv_file_path)
-
     # Save the combined array as a CSV file
-    csv_file_path = f'csv_files/dataset_{directory_id}.csv'
+    csv_file_path = f'data/dataset_{directory_id}.csv'
     print("Saving dataset as CSV:", csv_file_path)
     np.savetxt(csv_file_path, combined_array, delimiter=',', fmt='%d', header=",".join(headers), comments='')
 
