@@ -44,6 +44,10 @@ def preprocessing_ood(id):
     images_flat = images_array.reshape(num_samples, -1)
     masks_flat = masks_array.reshape(num_samples, -1)
 
+    # Convert the array elements to integers
+    images_flat = images_flat.astype(int)
+    masks_flat = masks_flat.astype(int)
+
     # Create an array for the indices
     indices = np.arange(num_samples).reshape(num_samples, 1)
 
