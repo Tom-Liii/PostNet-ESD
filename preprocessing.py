@@ -2,6 +2,7 @@ import numpy as np
 import os
 import glob
 from PIL import Image
+from tqdm import tqdm
 
 # Specify the path to your dataset images and masks
 image_dir = "/research/d5/gds/hzyang22/data/ESD_seg/01/image"
@@ -12,16 +13,18 @@ if not os.path.exists('data'):
     os.makedirs('data')
 
 # Load the dataset images
+print("Loading images...")
 images = []
 image_files = glob.glob(os.path.join(image_dir, "*.png")) 
-for image_file in image_files:
+for image_file in tqdm(image_files):
     image = np.array(Image.open(image_file))
     images.append(image)
 
 # Load the dataset masks
+print("Loading masks...")
 masks = []
 mask_files = glob.glob(os.path.join(mask_dir, "*.png")) 
-for mask_file in mask_files:
+for mask_file in tqdm(mask_files):
     mask = np.array(Image.open(mask_file))
     masks.append(mask)
 
@@ -47,4 +50,7 @@ headers = [""] + [str(i) for i in range(num_features)]
 combined_array = np.concatenate((indices, images_flat, masks_flat), axis=1)
 
 # Save the combined array as CSV file
+print("Saving dataset as CSV...")
 np.savetxt('data/ESD.csv', combined_array, delimiter=',', fmt='%d', header=",".join(headers), comments='')
+
+print("Dataset saved as CSV.")
