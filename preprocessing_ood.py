@@ -66,7 +66,7 @@ def preprocessing_ood(id):
     print("Dataset saved as CSV.")
 
 if __name__ == "__main__":
-    ids = {"01", "02"}
+    ids = {"02"}
     # call preprocessing_ood for each id
     for id in ids:
         preprocessing_ood(id)
