@@ -55,7 +55,7 @@ def preprocessing_ood(id):
     combined_array = np.concatenate((indices, images_flat, masks_flat), axis=1)
 
     # Save the combined array as CSV file
-    csv_file_path = f'data/ESD_{id}.csv'
+    csv_file_path = f'data/ESD_{id}_ood.csv'
     print("Saving dataset as CSV:", csv_file_path)
 
     # Create a progress bar for saving
@@ -65,4 +65,8 @@ def preprocessing_ood(id):
 
     print("Dataset saved as CSV.")
 
-preprocessing_ood('01')
+if __name__ == "__main__":
+    ids = {"01", "02"}
+    # call preprocessing_ood for each id
+    for id in ids:
+        preprocessing_ood(id)
