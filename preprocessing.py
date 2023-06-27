@@ -12,6 +12,10 @@ mask_dir = "/research/d5/gds/hzyang22/data/ESD_seg/01/mask"
 if not os.path.exists('data'):
     os.makedirs('data')
 
+# Print the data locations
+print("Image Directory:", image_dir)
+print("Mask Directory:", mask_dir)
+
 # Load the dataset images
 print("Loading images...")
 images = []
@@ -50,7 +54,12 @@ headers = [""] + [str(i) for i in range(num_features)]
 combined_array = np.concatenate((indices, images_flat, masks_flat), axis=1)
 
 # Save the combined array as CSV file
-print("Saving dataset as CSV...")
-np.savetxt('data/ESD.csv', combined_array, delimiter=',', fmt='%d', header=",".join(headers), comments='')
+csv_file_path = 'data/ESD.csv'
+print("Saving dataset as CSV:", csv_file_path)
+
+# Create a progress bar for saving
+with tqdm(total=1, desc="Saving CSV", unit="file") as pbar:
+    np.savetxt(csv_file_path, combined_array, delimiter=',', fmt='%d', header=",".join(headers), comments='')
+    pbar.update(1)
 
 print("Dataset saved as CSV.")
