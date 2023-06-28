@@ -5,8 +5,8 @@ from PIL import Image
 from tqdm import tqdm
 
 # Specify the path to your dataset images and masks
-image_dir = "/research/d5/gds/hzyang22/data/ESD_seg/01/image"
-mask_dir = "/research/d5/gds/hzyang22/data/ESD_seg/01/mask"
+image_dir = "/Users/ligq/CUHK/cu/cuhk/course/y3_summer/summer_research/work/ESD_seg/01/image"
+mask_dir = "/Users/ligq/CUHK/cu/cuhk/course/y3_summer/summer_research/work/ESD_seg/01/mask"
 
 # Create a directory to store the CSV file
 if not os.path.exists('data'):
@@ -54,7 +54,7 @@ headers = [""] + [str(i) for i in range(num_features)]
 combined_array = np.concatenate((indices, images_flat, masks_flat), axis=1)
 
 # Save the combined array as CSV file
-csv_file_path = 'data/ESD.csv'
+csv_file_path = 'data/ESD_02.csv'
 print("Saving dataset as CSV:", csv_file_path)
 
 # Create a progress bar for saving
