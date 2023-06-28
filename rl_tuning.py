@@ -24,7 +24,7 @@ from test import rotating_image_classification, test_single_image
 from losses import edl_mse_loss, edl_digamma_loss, edl_log_loss, relu_evidence, policy_gradient_loss
 from metrics import calc_ece_softmax, DiceMetric, calc_mi
 from lenet import LeNet
-from segmentation_models_pytorch.unet.model import Unet
+from segmentation_models_pytorch import Unet
 from esd_dataset import ESD_Dataset, get_split, target_img_size
 
 color = ['#4C72B0', '#55A868', '#DD8452','#C44E52', '#8172B3', '#937860', '#DA8BC3', '#8C8C8C', '#CCB974', '#64B5CD','#1F3D56']
