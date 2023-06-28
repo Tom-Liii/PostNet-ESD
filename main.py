@@ -22,7 +22,7 @@ from train import train_model
 from test import rotating_image_classification, test_single_image
 from losses import edl_mse_loss, edl_digamma_loss, edl_log_loss, relu_evidence
 from lenet import LeNet
-from segmentation_models_pytorch.unet.model import Unet
+from segmentation_models_pytorch import Unet
 from esd_dataset import ESD_Dataset, get_split
 
 def main():
