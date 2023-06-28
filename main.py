@@ -86,7 +86,7 @@ def main():
     torch.manual_seed(seed)
     torch.cuda.manual_seed(seed)
     
-    log_file_name = './saved_result/log'
+    log_file_name = './saved_results/log'
     log_file_name += '_seed_' + str(seed)
     log_file_name += '_batch_' + str(train_batch_size)
     log_file_name += '_classes_' + str(args.num_classes)
