@@ -23,15 +23,15 @@ def save(args, model, optimizer):
 
     if args.uncertainty:
         if args.digamma:
-            checkpoint_name = "./results/model_uncertainty_digamma" 
+            checkpoint_name = "./saved_results/model_uncertainty_digamma" 
             
         if args.log:
-            checkpoint_name = "./results/model_uncertainty_log"
+            checkpoint_name = "./saved_results/model_uncertainty_log"
             
         if args.mse:
-            checkpoint_name = "./results/model_uncertainty_mse" 
+            checkpoint_name = "./saved_results/model_uncertainty_mse" 
     else:
-        checkpoint_name = "./results/model" 
+        checkpoint_name = "./saved_results/model" 
     checkpoint_name += '_batch_' + str(args.train_batch_size) + '_classes_' + str(args.num_classes) + '_seed_' + str(args.seed)
     torch.save(state, checkpoint_name)
 
